@@ -15,8 +15,8 @@ module BootstrapDatepickerSpec
     end
 
     def select_date(date_string)
-      date = Chronic.parse(date_string)
-      @node.set "#{date.to_s}\e"
+      time = Chronic.parse(date_string)
+      @node.set "#{time.to_date.to_s}\e"
       @node.first(:xpath, './../..').trigger("click")
     end
 
