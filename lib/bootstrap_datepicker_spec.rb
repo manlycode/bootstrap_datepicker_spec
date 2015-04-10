@@ -53,7 +53,6 @@ module BootstrapDatepickerSpec
       eos
       picker_days.find(:xpath, day_xpath).trigger :click
 
-      fail if Date.parse(@node.value) != value
       # fail unless page.has_no_css? '.datepicker'
     end
 
