@@ -20,7 +20,8 @@ module BootstrapDatepickerSpec
 
       page = @node.send(:session)
 
-      picker = page.find('.datepicker')
+      # bootstrap-datepicker appends the container to the end of the body tag
+      picker = page.all('body .datepicker').last
 
       picker_years = picker.find('.datepicker-years', visible: false)
       picker_months = picker.find('.datepicker-months', visible: false)
