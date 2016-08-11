@@ -52,7 +52,7 @@ module BootstrapDatepickerSpec
           and not(contains(concat(' ', @class, ' '), ' new '))
           and normalize-space(text())='#{value.day}']
       eos
-      picker_days.find(:xpath, day_xpath).trigger :click
+      picker_days.find(:xpath, day_xpath).click
 
       # fail unless page.has_no_css? '.datepicker'
     end
