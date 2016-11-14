@@ -16,7 +16,7 @@ module BootstrapDatepickerSpec
 
     def select_date(value_string)
       value = Date.parse(value_string)
-      @node.click
+      @node.click rescue @node.trigger("click")
 
       page = @node.send(:session)
 
@@ -54,7 +54,8 @@ module BootstrapDatepickerSpec
           and not(contains(concat(' ', @class, ' '), ' new '))
           and normalize-space(text())='#{value.day}']
       eos
-      picker_days.find(:xpath, day_xpath).click
+      picker_day = picker_days.find(:xpath, day_xpath)
+      picker_day.click rescue picker_day.trigger("click")
 
       # fail unless page.has_no_css? '.datepicker'
     end
