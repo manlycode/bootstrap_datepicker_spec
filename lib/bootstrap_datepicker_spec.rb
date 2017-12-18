@@ -33,21 +33,33 @@ module BootstrapDatepickerSpec
       picker_current_year = picker_months.find('th.datepicker-switch', visible: false)
       picker_current_month = picker_days.find('th.datepicker-switch', visible: false)
 
-      picker_current_month.trigger("click") if picker_days.visible?
-      picker_current_year.trigger("click") if picker_months.visible?
+      if picker_days.visible?
+        picker_current_month.click rescue picker_current_month.trigger("click")
+      end
+      if picker_months.visible?
+        picker_current_year.click rescue picker_current_year.trigger("click")
+      end
 
       decade_start, decade_end = picker_current_decade.text.split('-').map(&:to_i)
 
       if value.year < decade_start.to_i
         gap = decade_start / 10 - value.year / 10
-        gap.times { picker_years.find('th.prev').trigger("click") }
+        gap.times do
+          th_prev = picker_years.find('th.prev')
+          th_prev.click rescue th_prev.trigger("click")
+        end
       elsif value.year > decade_end
         gap = value.year / 10 - decade_end / 10
-        gap.times { picker_years.find('th.next').trigger("click") }
+        gap.times do
+          th_next = picker_years.find('th.next')
+          th_next.click rescue th_next.trigger("click")
+        end
       end
 
-      picker_years.find('.year', text: value.year).trigger("click")
-      picker_months.find('.month', text: value.strftime('%b')).trigger("click")
+      year_el = picker_years.find('.year', text: value.year)
+      year_el.click rescue year_el.trigger("click")
+      month_el = picker_months.find('.month', text: value.strftime('%b'))
+      month_el.click rescue month_eltrigger("click")
       day_xpath = <<-eos
           .//*[contains(concat(' ', @class, ' '), ' day ')
           and not(contains(concat(' ', @class, ' '), ' old '))
